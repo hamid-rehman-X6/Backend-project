@@ -1,0 +1,9 @@
+{
+  "db": {
+    "database": "MySecondDB",
+    "username": "postgres",
+    "password": "0078123456",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
