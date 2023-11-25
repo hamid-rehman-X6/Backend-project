@@ -6,7 +6,7 @@ module.exports = {
   createStudent: async function (body) {
     const userdata = {
       firstName: body.firstName,
-      lastName: body.lastName,
+      lastName: body.lastName || "",
       userName: body.userName,
       email: body.email,
       password: body.password,
@@ -20,31 +20,82 @@ module.exports = {
       degreeName: body.degreeName,
       semester: body.semester,
       dateofBirth: body.dateofBirth,
-      gender: body.gender,
     };
     const user = await createUser(userdata);
-    const updatedStudent = { ...studentData, UserId: user.u_ID };
+    const updatedStudent = { ...studentData, userID: user.u_ID };
     const data = await models.students.create(updatedStudent);
     return data;
   },
 
   getStudentById: async function (id) {
-    const data = await models.students.findByPk(id);
-    return data;
+    const data = await models.students.findByPk(id, {
+      attributes: {
+        exclude: ["createdAt", "deletedAt", "updatedAt"],
+      },
+    });
+    const userid = data.userID;
+    const userdata = await models.users.findByPk(userid, {
+      attributes: {
+        exclude: [
+          "password",
+          "u_ID",
+          "firstName",
+          "lastName",
+          "createdAt",
+          "deletedAt",
+          "updatedAt",
+        ],
+      },
+    });
+
+    const finalUser = { data, userdata };
+    return finalUser;
   },
 
   getAllStudent: async function (body) {
-    const data = await models.students.findAll(body);
-    return data;
+    const data = await models.students.findAll(body, {
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
+
+    const userids = data.map((student) => student.userid);
+
+    const userData = await models.users.findAll({
+      where: {
+        u_ID: userids,
+      },
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
+
+    const finalUser = { data, userData };
+    return finalUser;
   },
 
   deleteStudent: async function (id) {
-    const data = await models.students.destroy({
+    //   const data = await models.students.destroy({
+    //     where: {
+    //       student_ID: id,
+    //     },
+    //   });
+    //   return data;
+
+    const student = await models.students.findByPk(id);
+    const uid = student.userID;
+    const deletestudent = await models.students.destroy({
       where: {
         student_ID: id,
       },
     });
-    return data;
+
+    const deleteuser = await models.users.destroy({
+      where: {
+        u_ID: uid,
+      },
+    });
+    return { deletestudent, deleteuser };
   },
 
   updateStudent: async function (body) {

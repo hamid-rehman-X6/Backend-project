@@ -7,14 +7,18 @@ module.exports = {
   },
 
   getUserById: async function (id) {
-    const data = await models.users.findByPk(id);
+    const data = await models.users.findByPk(id, {
+      attributes: {
+        exclude: ["password", "createdAt", "updatedAt"],
+      },
+    });
     return data;
   },
 
   getAllUser: async function (body) {
     // const data = await models.users.findAll(body);
     const data = await models.users.findAll({
-      attributes: { exclude: ["password"] },
+      attributes: { exclude: ["password", "createdAt", "updatedAt"] },
     });
 
     return data;

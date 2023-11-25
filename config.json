@@ -4,6 +4,8 @@
     "username": "postgres",
     "password": "0078123456",
     "host": "localhost",
-    "dialect": "postgres"
-  }
+    "dialect": "postgres",
+    "logging": false
+  },
+  "jwt": "sdvdfvfghfgsdcv435345df"
 }

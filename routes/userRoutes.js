@@ -8,11 +8,17 @@ var {
   deleteUser,
   updateUser,
 } = require("../Controller/index");
+// const authenticationController = require("../Controller/authentication/authenticationController");
 
 router.post("/createUSER", createUser);
 router.get("/getUserById", getUserById);
-router.get("/getAllUser", getAllUser);
+router.get(
+  "/getAllUser",
+  //  authenticationController.authenticate,
+  getAllUser
+);
 router.delete("/deleteUser", deleteUser);
 router.put("/updateUser", updateUser);
+// router.post("/login", authenticationController.login);
 
 module.exports = router;

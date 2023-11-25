@@ -27,7 +27,7 @@ teachers.init(
   {
     sequelize,
     modelName: "TEACHER",
-    paranoid: true,
+    // paranoid: true,
     timestamps: true,
   }
 );

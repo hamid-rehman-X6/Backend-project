@@ -12,12 +12,12 @@ students.init(
       allowNull: false,
     },
     registration_No: {
-      type: DataTypes.STRING(10),
+      type: DataTypes.STRING(),
       unique: true,
       allowNull: false,
     },
     department: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(),
       allowNull: false,
     },
     degreeName: {
@@ -32,16 +32,12 @@ students.init(
       type: DataTypes.DATE(),
       allowNull: false,
     },
-    gender: {
-      type: DataTypes.ENUM("male", "female"),
-      allowNull: false,
-    },
   },
 
   {
     sequelize,
     modelName: "STUDENT",
-    paranoid: true,
+    // paranoid: true,
     timestamps: true,
   }
 );

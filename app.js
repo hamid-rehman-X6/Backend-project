@@ -13,12 +13,14 @@ var studentRouter = require("./routes/studentRoutes");
 var app = express();
 
 // view engine setup
+
 app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.options("*", cors());
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/teachers", teacherRouter);
