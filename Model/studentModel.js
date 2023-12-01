@@ -36,15 +36,7 @@ module.exports = {
     const userid = data.userID;
     const userdata = await models.users.findByPk(userid, {
       attributes: {
-        exclude: [
-          "password",
-          "u_ID",
-          "firstName",
-          "lastName",
-          "createdAt",
-          "deletedAt",
-          "updatedAt",
-        ],
+        exclude: ["password", "u_ID", "createdAt", "deletedAt", "updatedAt"],
       },
     });
 
